@@ -16,6 +16,7 @@
 <meta name="twitter:image" content="https://thecrumb.co/og-cover.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Playfair+Display:ital,wght@0,800;0,900;1,800&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Playfair+Display:ital,wght@0,800;0,900;1,800&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ================= DESIGN TOKENS ================= */
@@ -47,10 +48,14 @@
   --ease-bounce:cubic-bezier(.34,1.56,.64,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:96px}
+html{
+  scroll-behavior:smooth;scroll-padding-top:96px;
+  overflow-x:hidden;width:100%;max-width:100%;
+}
 body{
   font-family:var(--font-body);background:var(--paper);color:var(--ink);
-  line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  line-height:1.55;overflow-x:hidden;width:100%;max-width:100%;
+  -webkit-font-smoothing:antialiased;position:relative;
 }
 ::selection{background:var(--orange);color:#fff}
 img{max-width:100%;display:block}
@@ -1195,7 +1200,7 @@ section{position:relative;z-index:1}
 .micro-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
 .dm-mock{
   background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:26px;box-shadow:var(--shadow-lg);position:relative;
+  padding:26px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
 }
 .dm-mock::before{
   content:"";position:absolute;width:280px;height:280px;border-radius:50%;
@@ -2072,7 +2077,10 @@ footer{
               </div>
               <div class="cv-profile">
                 <div class="cv-avatar">
-                  <img src="profile.png" alt="Profile" class="cv-avatar-img">
+                  <picture>
+                    <source srcset="profile.webp" type="image/webp">
+                    <img src="profile.png" alt="Profile" class="cv-avatar-img" loading="lazy">
+                  </picture>
                 </div>
                 <div class="cv-name">Alex Carter
                   <svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 1l1.6 1.5 2.2-.3.6 2.1 1.9 1.1-.8 2.1.8 2.1-1.9 1.1-.6 2.1-2.2-.3L7.5 14l-1.6-1.5-2.2.3-.6-2.1-1.9-1.1.8-2.1-.8-2.1 1.9-1.1.6-2.1 2.2.3z" fill="#FF6B35"/><path d="M5 7.5l1.8 1.8L10.4 5.7" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2560,7 +2568,7 @@ footer{
             </span>
           </div>
           <div class="video-frame" data-video-frame>
-            <video class="demo-video" id="videoStage" muted loop playsinline preload="auto"></video>
+            <video class="demo-video" id="videoStage" muted loop playsinline preload="metadata"></video>
             <iframe class="demo-video" id="videoStageYT" style="display:none" frameborder="0"
               allow="autoplay; encrypted-media" allowfullscreen title="Product walkthrough"></iframe>
             <div class="video-title-overlay" data-video-title-overlay>
