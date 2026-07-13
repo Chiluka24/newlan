@@ -47,15 +47,17 @@
   --ease:cubic-bezier(.22,1,.36,1);
   --ease-bounce:cubic-bezier(.34,1.56,.64,1);
 }
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{
   scroll-behavior:smooth;scroll-padding-top:96px;
-  overflow-x:hidden;width:100%;max-width:100%;
+  overflow-x:hidden;overflow-y:visible;width:100%;max-width:100%;
+  touch-action:manipulation;
 }
 body{
   font-family:var(--font-body);background:var(--paper);color:var(--ink);
-  line-height:1.55;overflow-x:hidden;width:100%;max-width:100%;
+  line-height:1.55;overflow-x:hidden;overflow-y:visible;width:100%;max-width:100%;
   -webkit-font-smoothing:antialiased;position:relative;
+  -webkit-overflow-scrolling:touch;
 }
 ::selection{background:var(--orange);color:#fff}
 img{max-width:100%;display:block}
@@ -101,12 +103,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 /* ================= NAV ================= */
 .nav{
-  position:sticky;top:16px;z-index:100;margin:16px auto 0;max-width:1180px;padding:0 24px;
-  transition:top .25s var(--ease),margin-top .25s var(--ease);
+  position:fixed;top:16px;left:0;right:0;z-index:100;margin:0 auto;max-width:1180px;padding:0 24px;
+  transition:top .25s var(--ease);
 }
-.nav.nav-scrolled{top:0;margin-top:0}
+.nav.nav-scrolled{top:0}
 .nav.nav-scrolled .nav-inner{
-  border-radius:0 0 20px 20px;box-shadow:var(--shadow-md),0 1px 0 rgba(25,20,16,.06);
+  box-shadow:var(--shadow-md),0 1px 0 rgba(25,20,16,.06);
   background:rgba(255,255,255,.86);
 }
 .nav-inner{
@@ -114,6 +116,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   background:rgba(255,255,255,.65);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
   border:1px solid rgba(255,255,255,.6);border-radius:100px;padding:10px 10px 10px 22px;
   box-shadow:var(--shadow-sm),inset 0 1px 0 rgba(255,255,255,.5);
+  transform:translateZ(0);
 }
 .logo{display:flex;align-items:center;gap:10px;font-family:"Playfair Display",Georgia,serif;font-weight:900;font-size:27px;letter-spacing:-.01em}
 .nav-links{display:flex;align-items:center;gap:26px;font-size:14.5px;font-weight:500;color:var(--ink-2)}
@@ -125,6 +128,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-links a:hover{color:var(--ink)}
 .nav-cta{display:flex;align-items:center;gap:10px}
+@media (min-width:901px){
+  .nav{max-width:1240px}
+  .nav-inner{padding:15px 15px 15px 32px}
+  .logo{font-size:32px}
+  .nav-links{gap:32px;font-size:15.5px}
+  .nav-cta{gap:14px}
+  .nav-cta .btn{padding:13px 26px;font-size:15px}
+}
 
 /* ---------- hamburger + mobile drawer ---------- */
 .hamburger{
@@ -153,6 +164,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   position:fixed;inset:0;z-index:150;width:100vw;height:100vh;height:100dvh;
   background:rgba(25,20,16,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
   opacity:0;pointer-events:none;transition:opacity .3s var(--ease);
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
 }
 .mobile-drawer.open{opacity:1;pointer-events:auto}
 .mobile-drawer-panel{
@@ -174,6 +186,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   padding:11px 22px;border-radius:100px;white-space:nowrap;
   transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .2s;
 }
+.btn:active{transform:scale(.96);transition-duration:.1s}
 .btn-primary{background:var(--ink);color:var(--paper);box-shadow:0 1px 2px rgba(25,20,16,.2)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(25,20,16,.22)}
 .btn-orange{background:var(--orange);color:var(--ink);box-shadow:0 2px 8px rgba(255,107,53,.35),inset 0 -2px 0 rgba(0,0,0,.12);position:relative;overflow:hidden}
@@ -664,7 +677,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   position:fixed;inset:0;z-index:400;background:rgba(10,8,6,.94);
   display:flex;align-items:center;justify-content:center;padding:44px;
   opacity:0;pointer-events:none;transition:opacity .3s var(--ease);
-  overflow-y:auto;
+  overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
 }
 .video-lightbox.open{opacity:1;pointer-events:auto}
 .video-lightbox-inner{
@@ -1167,6 +1180,7 @@ section{position:relative;z-index:1}
 .marquee{
   display:flex;gap:18px;width:max-content;margin-bottom:18px;
   animation:marquee 28s linear infinite;
+  will-change:transform;
 }
 .marquee.rev{animation:marqueeRev 32s linear infinite}
 .marquee:hover{animation-play-state:paused}
@@ -1515,7 +1529,7 @@ footer{
 .auth-close:hover{background:var(--paper-2);color:var(--ink);transform:rotate(90deg)}
 .auth-close svg{width:15px;height:15px}
 
-.form-panel{padding:44px 46px;display:flex;flex-direction:column;overflow-y:auto}
+.form-panel{padding:44px 46px;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .auth-tabs{
   display:flex;background:var(--paper-2);border-radius:100px;padding:4px;margin-bottom:28px;position:relative;flex:none;
 }
@@ -1656,6 +1670,7 @@ footer{
   .auth-shell{grid-template-columns:1fr;max-width:440px;max-height:94vh}
   .auth-brand{display:none}
   .form-panel{padding:36px 28px}
+  .af-input{font-size:16px} /* prevents iOS Safari from auto-zooming the page on focus */
 }
 @media (max-width:480px){
   .auth-overlay{padding:12px}
@@ -1676,7 +1691,7 @@ footer{
   .stage-connector{width:110px}
 }
 @media (max-width:900px){
-  .nav{top:10px;margin-top:10px;padding:0 14px}
+  .nav{top:10px;padding:0 14px}
   .nav-inner{padding:8px 8px 8px 18px}
   .nav-links{display:none}
   .nav-cta{display:none}
@@ -3321,6 +3336,20 @@ footer{
     }
     window.addEventListener("scroll", onNavScroll, {passive:true});
     onNavScroll();
+
+    /* nav is position:fixed (out of flow) — reserve the space it would have
+       occupied so page content doesn't start underneath it */
+    function reserveNavSpace(){
+      var isMobile = window.innerWidth <= 900;
+      var restingTop = isMobile ? 10 : 16;
+      document.body.style.paddingTop = (navEl.offsetHeight + restingTop) + "px";
+    }
+    reserveNavSpace();
+    window.addEventListener("resize", reserveNavSpace);
+    window.addEventListener("orientationchange", reserveNavSpace);
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(reserveNavSpace); /* logo font can shift nav height after load */
+    }
   })();
 
   /* ---------- hamburger + mobile drawer ---------- */
