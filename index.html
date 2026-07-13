@@ -479,16 +479,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   position:absolute;top:8px;right:8px;font-family:var(--font-body);font-size:8px;font-weight:600;
   background:rgba(25,20,16,.6);color:#fff;padding:3px 8px;border-radius:100px;letter-spacing:.02em;
 }
-.cv-imp{
-  position:absolute;bottom:8px;right:8px;font-family:var(--font-mono);font-size:8px;font-weight:700;letter-spacing:.02em;
-  background:var(--mint);color:#fff;border-radius:100px;padding:3px 8px;white-space:nowrap;
-  display:inline-flex;align-items:center;gap:4px;z-index:2;
-  opacity:0;transform:translateY(-4px) scale(.85);box-shadow:0 2px 8px rgba(14,159,110,.35);
-}
-.cv-imp::before{content:"";width:4px;height:4px;border-radius:50%;background:#fff;animation:impPulse 1.6s ease-in-out infinite}
-@keyframes impPulse{0%,100%{opacity:1}50%{opacity:.4}}
-.stage-revealed .cv-imp{animation:impPop .5s var(--ease-bounce) 1.2s forwards}
-@keyframes impPop{to{opacity:1;transform:none}}
 
 .cv-profile{text-align:center;padding:8px 0 0}
 .cv-avatar{
@@ -2094,7 +2084,6 @@ footer{
                   <text x="55" y="98.5" font-family="Arial,sans-serif" font-weight="700" font-size="8.5" fill="#fff" text-anchor="middle">Shop now →</text>
                 </svg>
                 <span class="cv-ad-sponsored-badge">Sponsored</span>
-                <span class="cv-imp">+1 impression · you earn</span>
               </div>
               <div class="cv-profile">
                 <div class="cv-avatar">
